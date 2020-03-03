@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_home"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_home"
+        android:title="首页"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_project"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_project"
+        android:title="项目"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_square"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_square"
+        android:title="广场"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_wechart"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_wechart"
+        android:title="公众号"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_me"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_me"
+        android:title="我的"
+        app:showAsAction="ifRoom"/>
+</menu>
