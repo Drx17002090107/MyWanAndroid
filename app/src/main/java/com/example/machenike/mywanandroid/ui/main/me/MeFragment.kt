@@ -1,20 +1,15 @@
 package com.example.machenike.mywanandroid.ui.main.me
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.coder.zzq.smartshow.toast.SmartToast
 import com.example.machenike.mywanandroid.R
-import com.example.machenike.mywanandroid.app.App
-import com.example.machenike.mywanandroid.model.me.PersonalScoreModel
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
 import com.example.machenike.mywanandroid.ui.login.LoginActivity
 import com.example.machenike.mywanandroid.utils.Preference
 import kotlinx.android.synthetic.main.fragment_me.*
 import luyao.util.ktx.ext.startKtxActivity
-import okhttp3.Cache
-import java.io.File
 
 /**
 created time：2019/12/18 11:04
@@ -39,8 +34,8 @@ class MeFragment : BaseVMFragment<MeViewModel>() {
 
     override fun startObserve() {
        mViewModel.run {
-           mPersonalScoreModel.observe(this@MeFragment, Observer {
-               val scoreModel = mPersonalScoreModel.value!!
+           mPersonalScore.observe(this@MeFragment, Observer {
+               val scoreModel = mPersonalScore.value!!
                 tvUserName.text = scoreModel.username
                 tvUserInfo.text = "ID:${scoreModel.userId}    排名:${scoreModel.rank}"
                 tvUserLevel.text = "Lv ${scoreModel.level}"
@@ -58,6 +53,9 @@ class MeFragment : BaseVMFragment<MeViewModel>() {
         super.onStart()
     }
 
-
+    companion object {
+        @JvmStatic
+        fun newInstance() = MeFragment()
+    }
 
 }

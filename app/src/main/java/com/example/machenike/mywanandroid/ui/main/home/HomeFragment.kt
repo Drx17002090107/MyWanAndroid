@@ -145,4 +145,7 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
             .setDelayTime(3000)
         banner.start()
     }
+    companion object {
+       fun newInstance() = HomeFragment()
+    }
 }

@@ -12,7 +12,7 @@ created time：2020/1/2 14:19
 created by：动感超人
 Describe ：
  */
-class ProjectAdapter :BaseQuickAdapter<ProjectInfoModel,BaseViewHolder>(R.layout.item_project_ariticle){
+class ProjectAdapter :BaseQuickAdapter<ProjectInfoModel,BaseViewHolder>(R.layout.item_picture_ariticle){
     override fun convert(helper: BaseViewHolder, item: ProjectInfoModel) {
         helper.setText(R.id.tvProjectAriticleAuthor,
             if(!item.author.isEmpty())item.author else item.shareUser)

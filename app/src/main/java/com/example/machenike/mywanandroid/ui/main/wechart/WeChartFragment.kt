@@ -8,9 +8,12 @@ import com.coder.zzq.smartshow.toast.SmartToast
 import com.example.machenike.mywanandroid.R
 import com.example.machenike.mywanandroid.model.wechart.WeChartInfo
 import com.example.machenike.mywanandroid.model.wechart.WeChartNames
+import com.example.machenike.mywanandroid.ui.BrowserNormalActivity
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
+import com.example.machenike.mywanandroid.utils.ChartUtils
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_wechart.*
+import luyao.util.ktx.ext.startKtxActivity
 
 /**
 created time：2020/1/2 16:54
@@ -67,6 +70,12 @@ class WeChartFragment: BaseVMFragment<WeChartViewModel>() {
     fun initAdapter(){
         mAdapter.run {
             setOnLoadMoreListener({getArticles()},rvWeChartArticles)
+            setOnItemClickListener{_,_,position->
+                startKtxActivity<BrowserNormalActivity>(extra = Bundle().apply {
+                    putString("title",ChartUtils.replaceQuotationMarks(mAdapter.data[position].title))
+                    putString("url",mAdapter.data[position].link)
+                })
+            }
         }
         rvWeChartArticles.adapter = mAdapter
     }
@@ -104,5 +113,10 @@ class WeChartFragment: BaseVMFragment<WeChartViewModel>() {
             }
         }
         currentPage++
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = WeChartFragment()
     }
 }

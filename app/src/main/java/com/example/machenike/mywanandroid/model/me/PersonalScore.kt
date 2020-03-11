@@ -5,7 +5,7 @@ created time：2019/12/18 11:12
 created by：动感超人
 Describe ：个人积分
  */
-data class PersonalScoreModel(
+data class PersonalScore(
     val coinCount: Int,
     val level: Int,
     val rank: Int,

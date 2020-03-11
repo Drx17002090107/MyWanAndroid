@@ -1,12 +1,13 @@
 package com.example.machenike.mywanandroid.net
 
+
 import com.example.machenike.mywanandroid.model.home.ArticleInfoModel
 import com.example.machenike.mywanandroid.model.home.ArticlePageModel
 import com.example.machenike.mywanandroid.model.home.BannerModel
-import com.example.machenike.mywanandroid.model.me.PersonalScoreModel
-import com.example.machenike.mywanandroid.model.project.ProjectInfoModel
+import com.example.machenike.mywanandroid.model.me.PersonalScore
 import com.example.machenike.mywanandroid.model.project.ProjectNamesModel
 import com.example.machenike.mywanandroid.model.project.ProjectPageModel
+import com.example.machenike.mywanandroid.model.square.SquarePage
 import com.example.machenike.mywanandroid.model.wechart.WeChartNames
 import com.example.machenike.mywanandroid.model.wechart.WeChartPage
 import com.example.machenike.mywanandroid.net.response.WanResponse
@@ -35,7 +36,7 @@ interface ApiService {
     suspend fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): WanResponse<UserModel>
 
     @GET("/lg/coin/userinfo/json")
-    suspend fun getPersonalScore():Response<WanResponse<PersonalScoreModel>>
+    suspend fun getPersonalScore():Response<WanResponse<PersonalScore>>
 
     /**
      * 首页
@@ -82,4 +83,10 @@ interface ApiService {
     @GET("/wxarticle/list/{id}/{page}/json")
     suspend fun findWeChartInfo(@Path("id") id:Int,@Path("page") page:Int
                                 ,@Query("k")keyWord:String):Response<WanResponse<WeChartPage>>
+
+    /**
+     * 广场
+     */
+    @GET("/user_article/list/{page}/json")
+    suspend fun getSquareInfo(@Path("page") page:Int):Response<WanResponse<SquarePage>>
 }

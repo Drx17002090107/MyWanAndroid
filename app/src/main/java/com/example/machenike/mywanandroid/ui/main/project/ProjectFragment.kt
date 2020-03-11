@@ -10,10 +10,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.machenike.mywanandroid.R
 import com.example.machenike.mywanandroid.model.project.ProjectInfoModel
 import com.example.machenike.mywanandroid.model.project.ProjectNamesModel
+import com.example.machenike.mywanandroid.ui.BrowserNormalActivity
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_project.*
+import luyao.util.ktx.ext.startKtxActivity
 
 
 /**
@@ -64,6 +66,13 @@ class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
     fun initAdapter(){
         mAdapter.run {
             setOnLoadMoreListener({getArticles()},rvProjectArticles)
+            setOnItemClickListener{_,_,position->
+                startKtxActivity<BrowserNormalActivity>(extra = Bundle().apply {
+                    putString("title",mAdapter.data[position].title)
+                    putString("url",mAdapter.data[position].link)
+                })
+
+            }
         }
         rvProjectArticles.adapter = mAdapter
     }
@@ -114,5 +123,9 @@ class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
                 setArticles(mProjectInfoModel.value!!.data.datas)
             })
         }
+    }
+    companion object {
+        @JvmStatic
+        fun newInstance() = ProjectFragment()
     }
 }

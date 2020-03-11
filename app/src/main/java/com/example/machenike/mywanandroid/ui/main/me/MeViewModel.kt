@@ -2,7 +2,7 @@ package com.example.machenike.mywanandroid.ui.main.me
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.machenike.mywanandroid.model.me.PersonalScoreModel
+import com.example.machenike.mywanandroid.model.me.PersonalScore
 import com.example.machenike.mywanandroid.net.NetWorkClient
 import com.example.machenike.mywanandroid.net.executeResponse
 import com.example.machenike.mywanandroid.ui.base.BaseViewModel
@@ -15,7 +15,7 @@ created by：动感超人
 Describe ：
  */
 class MeViewModel : BaseViewModel(){
-    var mPersonalScoreModel:MutableLiveData<PersonalScoreModel> = MutableLiveData()
+    var mPersonalScore:MutableLiveData<PersonalScore> = MutableLiveData()
     var mErrorMessage:MutableLiveData<String> = MutableLiveData()
     fun getPersonalScoreFromRquest(){
         launch {
@@ -23,7 +23,7 @@ class MeViewModel : BaseViewModel(){
             executeResponse(
                 response = result,
                 successBlock = {
-                    mPersonalScoreModel.value = result.body()?.data
+                    mPersonalScore.value = result.body()?.data
                     Log.d("_____________",result.body()?.data.toString())
                 },
                 errorBlock = {
