@@ -9,6 +9,7 @@ Describe ：
  */
 interface UserState {
     fun collect(context:Context?,block:()->Unit)
-
+    fun share(context:Context?,block: () -> Unit)
     fun login(context:Context?)
+    fun setPersonalScore(context: Context?,block: () -> Unit)
 }

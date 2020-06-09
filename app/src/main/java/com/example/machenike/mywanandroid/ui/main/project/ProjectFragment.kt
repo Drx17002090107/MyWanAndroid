@@ -1,9 +1,7 @@
 package com.example.machenike.mywanandroid.ui.main.project
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,6 +10,7 @@ import com.example.machenike.mywanandroid.model.project.ProjectInfoModel
 import com.example.machenike.mywanandroid.model.project.ProjectNamesModel
 import com.example.machenike.mywanandroid.ui.BrowserNormalActivity
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
+import com.example.machenike.mywanandroid.ui.login.state.UserContext
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_project.*
@@ -71,10 +70,25 @@ class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
                     putString("title",mAdapter.data[position].title)
                     putString("url",mAdapter.data[position].link)
                 })
-
             }
+            onItemChildClickListener = this@ProjectFragment.onMyItemChildClickListener
         }
         rvProjectArticles.adapter = mAdapter
+    }
+    private val onMyItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+        when (view.id) {
+            R.id.imgProjectCollect -> {
+                UserContext.collect(context,{
+                    mAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            mViewModel.collectArticle(id, collect)
+                        }
+                        notifyDataSetChanged()
+                    }
+                })
+            }
+        }
     }
     fun refresh(){
         projectRefreshLayout.isRefreshing = true

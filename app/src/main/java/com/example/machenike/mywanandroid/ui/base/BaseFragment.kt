@@ -34,4 +34,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         cancel()
     }
 
+
+
 }

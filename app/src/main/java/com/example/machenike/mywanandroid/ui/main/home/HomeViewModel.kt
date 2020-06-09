@@ -65,10 +65,11 @@ class HomeViewModel: BaseViewModel(){
         }
     }
     fun collectArticle(articleId:Int,isCollect:Boolean){
+        Log.d("drx","收藏"+articleId)
         launch {
             withContext(Dispatchers.IO){
                 if(isCollect)NetWorkClient.retrofitService.collectArticle(articleId)
-                else NetWorkClient.retrofitService.cancelCollectArticle(articleId)
+                else NetWorkClient.retrofitService.cancelOriginCollectArticle(articleId)
             }
         }
     }

@@ -6,8 +6,12 @@ created by：动感超人
 Describe ：
  */
 object ChartUtils {
+    /**
+     * 转换逗号 URL
+     */
     fun replaceQuotationMarks(str:String):String{
         return str.replace("&ldquo;","“")
             .replace("&rdquo;","”")
+            .replace("&mdash;","")
     }
 }

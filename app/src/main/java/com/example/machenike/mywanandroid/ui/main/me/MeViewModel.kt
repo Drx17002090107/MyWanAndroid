@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.machenike.mywanandroid.model.me.PersonalScore
 import com.example.machenike.mywanandroid.net.NetWorkClient
+import com.example.machenike.mywanandroid.net.executeMessage
 import com.example.machenike.mywanandroid.net.executeResponse
 import com.example.machenike.mywanandroid.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,7 @@ class MeViewModel : BaseViewModel(){
                     Log.d("_____________",result.body()?.data.toString())
                 },
                 errorBlock = {
-                    mErrorMessage.value= result.body()?.errorMsg
+                    mErrorMessage.value= executeMessage(result.errorBody())
                 })
         }
     }

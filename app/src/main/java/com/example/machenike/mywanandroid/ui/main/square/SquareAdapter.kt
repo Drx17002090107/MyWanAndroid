@@ -1,5 +1,6 @@
 package com.example.machenike.mywanandroid.ui.main.square
 
+import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.machenike.mywanandroid.R
@@ -20,7 +21,7 @@ class SquareAdapter():
                 if(!item.author.isEmpty())item.author else item.shareUser)
             setText(R.id.tvHomeAriticleTime,
                 if(!item.niceShareDate.isEmpty())item.niceShareDate else item.niceDate )
-            setText(R.id.tvHomeAriticleTitle,item.title)
+            setText(R.id.tvHomeAriticleTitle, Html.fromHtml(item.title))
             setText(R.id.tvHomeAriticleType,"${item.superChapterName}·${item.chapterName}")
             setImageResource(R.id.imgHomeCollect,
                 if(item.collect) R.drawable.ic_collect_selected else R.drawable.ic_collect_normal_gray)

@@ -10,10 +10,9 @@ import com.coder.zzq.smartshow.toast.SmartToast
 import com.example.machenike.mywanandroid.R
 import com.example.machenike.mywanandroid.model.home.ArticleInfoModel
 import com.example.machenike.mywanandroid.model.home.BannerModel
-import com.example.machenike.mywanandroid.model.home.Data
 import com.example.machenike.mywanandroid.ui.BrowserNormalActivity
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
-import com.example.machenike.mywanandroid.ui.login.LoginActivity
+import com.example.machenike.mywanandroid.ui.login.state.UserContext
 import com.example.machenike.mywanandroid.utils.GlideImageLoader
 import com.example.machenike.mywanandroid.utils.Preference
 import com.youth.banner.BannerConfig
@@ -25,7 +24,7 @@ import luyao.util.ktx.ext.startKtxActivity
 /**
 created time：2019/12/19 9:35
 created by：动感超人
-Describe ：
+Describe ：BUG 后台切回来会有 2次数据
  */
 class HomeFragment: BaseVMFragment<HomeViewModel>() {
     val mAdapter by lazy { ArticleAdapter() }
@@ -45,6 +44,7 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
         initBanner()
         initAdapter()
 
+
         homeRefreshLayout.setOnRefreshListener {
             refresh()
         }
@@ -59,7 +59,7 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
 //        mViewModel.getArticles(currentPage)
     }
 
-    fun initAdapter(){
+    private fun initAdapter(){
         mAdapter.run {
             setOnLoadMoreListener({mViewModel.getArticles(currentPage)},rvHomeShowArticles)
             addHeaderView(banner)
@@ -69,14 +69,14 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
                     putString("url",mAdapter.data[position].link)
                 })
             }
-            onItemChildClickListener=this@HomeFragment.onItemChildClickListener
+            onItemChildClickListener=this@HomeFragment.onMyItemChildClickListener
         }
         rvHomeShowArticles.adapter = mAdapter
     }
-    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+    private val onMyItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
         when (view.id) {
             R.id.imgHomeCollect -> {
-                if (isLogin) {
+                UserContext.collect(context,{
                     mAdapter.run {
                         data[position].run {
                             collect = !collect
@@ -84,13 +84,11 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
                         }
                         notifyDataSetChanged()
                     }
-                } else {
-                    activity?.startKtxActivity<LoginActivity>()
-                }
+                })
             }
         }
     }
-    fun initBanner(){
+    private fun initBanner(){
         banner.run {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,banner.dp2px(200f))
             setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -121,7 +119,7 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
     }
 
 
-    fun setArticles(data:List<ArticleInfoModel>){
+    private fun setArticles(data:List<ArticleInfoModel>){
         mAdapter.run {
             if(homeRefreshLayout.isRefreshing)
                 replaceData(data)
@@ -133,7 +131,7 @@ class HomeFragment: BaseVMFragment<HomeViewModel>() {
         homeRefreshLayout.isRefreshing = false
         currentPage++
     }
-    fun setBanner(data:List<BannerModel>){
+    private fun setBanner(data:List<BannerModel>){
         for (banner in data){
             bannerImages.add(banner.imagePath)
             bannerTitles.add(banner.title)

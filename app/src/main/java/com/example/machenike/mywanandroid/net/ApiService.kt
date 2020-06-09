@@ -4,10 +4,14 @@ package com.example.machenike.mywanandroid.net
 import com.example.machenike.mywanandroid.model.home.ArticleInfoModel
 import com.example.machenike.mywanandroid.model.home.ArticlePageModel
 import com.example.machenike.mywanandroid.model.home.BannerModel
+import com.example.machenike.mywanandroid.model.me.ArticleCollect
 import com.example.machenike.mywanandroid.model.me.PersonalScore
+import com.example.machenike.mywanandroid.model.navigation.NavigationModel
 import com.example.machenike.mywanandroid.model.project.ProjectNamesModel
 import com.example.machenike.mywanandroid.model.project.ProjectPageModel
 import com.example.machenike.mywanandroid.model.square.SquarePage
+import com.example.machenike.mywanandroid.model.system.SystemModel
+import com.example.machenike.mywanandroid.model.weather.NowModel
 import com.example.machenike.mywanandroid.model.wechart.WeChartNames
 import com.example.machenike.mywanandroid.model.wechart.WeChartPage
 import com.example.machenike.mywanandroid.net.response.WanResponse
@@ -51,13 +55,6 @@ interface ApiService {
     @GET("/banner/json")
     suspend fun getBannerData():Response<WanResponse<List<BannerModel>>>
 
-    @POST("/lg/collect/{id}/json")
-    suspend fun collectArticle(@Path("id")id:Int)
-
-    @POST("/lg/uncollect_originId/{id}/json")
-    suspend fun cancelCollectArticle(@Path("id") id: Int)
-
-
     /**
      * 项目
      */
@@ -89,4 +86,59 @@ interface ApiService {
      */
     @GET("/user_article/list/{page}/json")
     suspend fun getSquareInfo(@Path("page") page:Int):Response<WanResponse<SquarePage>>
+
+    /**
+     * 体系
+     */
+    @GET("/tree/json")
+    suspend fun getSystemTag():Response<WanResponse<List<SystemModel>>>
+
+    /**
+     * 导航
+     */
+    @GET("/navi/json")
+    suspend fun getNavigationInfo():Response<WanResponse<List<NavigationModel>>>
+
+    /**
+     * 天气
+     * 和风天气API
+     */
+    //现在的天气--免费
+    @GET("now")
+    suspend fun getNowFree(@Query("location")location:String,@Query("key")key:String= FREE_KEY):Response<NowModel>
+
+    //3-10天 天气--免费
+    @GET("forecast")
+    suspend fun getForecastFree(@Query("location",encoded = true)location:String, @Query("key")key:String= FREE_KEY)
+
+    //逐小时预报--免费
+    @GET("hourly")
+    suspend fun getHourlyFree(@Query("location")location:String,@Query("key")key:String= FREE_KEY)
+
+    //生活指数
+    @GET("lifestyle")
+    suspend fun getLifestyleFree(@Query("location")location:String,@Query("key")key:String= FREE_KEY)
+
+
+    /**
+     * 收藏
+     */
+
+    //收藏列表
+    @GET("/lg/collect/list/{page}/json")
+    suspend fun getCollectArticles(@Path("page") page:Int):Response<WanResponse<ArticleCollect>>
+
+    //取消我的收藏里的文章
+    @POST("/lg/uncollect/{id}/json")
+    suspend fun cancelCollectArticle(@Path("id") id:Int,@Query("originId")originId:Int):Response<WanResponse<String>>
+
+    //收藏文章
+    @POST("/lg/collect/{id}/json")
+    suspend fun collectArticle(@Path("id")id:Int)
+
+    //取消列表中收藏的文章
+    @POST("/lg/uncollect_originId/{id}/json")
+    suspend fun cancelOriginCollectArticle(@Path("id") id: Int)
+
+
 }

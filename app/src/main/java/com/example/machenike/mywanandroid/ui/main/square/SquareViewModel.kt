@@ -30,6 +30,13 @@ class SquareViewModel: BaseViewModel() {
             )
         }
     }
-
+    fun collectArticle(articleId:Int,isCollect:Boolean){
+        launch {
+            withContext(Dispatchers.IO){
+                if(isCollect)NetWorkClient.retrofitService.collectArticle(articleId)
+                else NetWorkClient.retrofitService.cancelOriginCollectArticle(articleId)
+            }
+        }
+    }
 
 }

@@ -54,7 +54,7 @@ object LogUtils {
                 else -> ""
             }
             getMethodName(Throwable())
-            Log.i(className, createLog(message))
+            Log.i("Drx:"+className, createLog(message))
         } catch (e: Exception) {
             error("${e.cause?.message}${System.getProperty("line.separator")}$json")
         }
@@ -158,7 +158,7 @@ object LogUtils {
         else when (msg) {
             is Int, Long, Float, Double, Boolean -> Log.v(className, createLog("$msg"))
             is String -> Log.v(className, createLog(msg))
-            else -> Log.v(className, createLog(msg.toString()))
+            else -> Log.v("Drx:"+className, createLog(msg.toString()))
         }
     }
 }

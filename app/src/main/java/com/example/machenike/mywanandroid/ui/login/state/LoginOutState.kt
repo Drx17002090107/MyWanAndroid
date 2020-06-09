@@ -17,9 +17,19 @@ class LoginOutState : UserState {
         goLoginActivity(context)
     }
 
+    override fun share(context: Context?, block: () -> Unit) {
+        goLoginActivity(context)
+    }
+
     override fun login(context: Context?) {
         goLoginActivity(context)
     }
+
+    override fun setPersonalScore(context: Context?, block: () -> Unit) {
+        //未登录没有个人信息
+        return
+    }
+
     private fun goLoginActivity(context:Context?){
         context?.run {
             SmartToast.info("请先登录")

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.coder.zzq.smartshow.toast.SmartToast
 import com.example.machenike.mywanandroid.R
 import com.example.machenike.mywanandroid.model.square.SquareInfo
 import com.example.machenike.mywanandroid.ui.BrowserNormalActivity
 import com.example.machenike.mywanandroid.ui.base.BaseVMFragment
+import com.example.machenike.mywanandroid.ui.login.state.UserContext
 import kotlinx.android.synthetic.main.fragment_square.*
 
 import luyao.util.ktx.ext.startKtxActivity
@@ -24,10 +26,10 @@ class SquareFragment: BaseVMFragment<SquareViewModel>() {
 
     private var currentPage = 0
     private val mAdapter by lazy { SquareAdapter() }
-    private val mTitle = arrayListOf("广场","体系","导航")
+//    private val mTitle = arrayListOf("广场","体系","导航")
 
     override fun initViewData(view: View, savedInstanceState: Bundle?) {
-        setTabLayout()
+//        setTabLayout()
 
         rvSquareArticles.layoutManager = LinearLayoutManager(context)
 
@@ -38,11 +40,11 @@ class SquareFragment: BaseVMFragment<SquareViewModel>() {
         refresh()
 
     }
-    private fun setTabLayout(){
-        mTitle.forEach{
-            tlSquareNavigation.addTab(tlSquareNavigation.newTab().setText(it))
-        }
-    }
+//    private fun setTabLayout(){
+//        mTitle.forEach{
+//            tlSquareNavigation.addTab(tlSquareNavigation.newTab().setText(it))
+//        }
+//    }
     override fun startObserve() {
         mViewModel.run {
             mSquarePage.observe(this@SquareFragment, Observer {
@@ -74,25 +76,25 @@ class SquareFragment: BaseVMFragment<SquareViewModel>() {
                     putString("url",mAdapter.data[position].link)
                 })
             }
-//            onItemChildClickListener = this@SquareFragment.onItemChildClickListener
+            onItemChildClickListener = this@SquareFragment.onMyItemChildClickListener
         }
         rvSquareArticles.adapter = mAdapter
     }
-//    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener{_,view,position->
-//        when(view.id){
-//            R.id.imgHomeCollect->{
-//                if(isLogin){
-//                    mAdapter.run {
-//                        data[position].run {
-//                            collect = !collect
-//                        }
-//                    }
-//                }else{
-//                    activity?.startKtxActivity<LoginActivity>()
-//                }
-//            }
-//        }
-//    }
+    private val onMyItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+        when (view.id) {
+            R.id.imgHomeCollect -> {
+                UserContext.collect(context,{
+                    mAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            mViewModel.collectArticle(id, collect)
+                        }
+                        notifyDataSetChanged()
+                    }
+                })
+            }
+        }
+    }
     private fun refresh(){
         squareRefreshLayout.isRefreshing = true
         currentPage = 0

@@ -1,7 +1,6 @@
 package com.example.machenike.mywanandroid.ui.main.project
 
 import androidx.lifecycle.MutableLiveData
-import com.example.machenike.mywanandroid.model.project.ProjectInfoModel
 import com.example.machenike.mywanandroid.model.project.ProjectNamesModel
 import com.example.machenike.mywanandroid.model.project.ProjectPageModel
 import com.example.machenike.mywanandroid.net.NetWorkClient
@@ -47,6 +46,15 @@ class ProjectViewModel: BaseViewModel() {
                 response = result,
                 successBlock = {mProjectInfoModel.value = result.body()!!},
                 errorBlock = { mErrorMessage.value = executeMessage(result.errorBody())})
+        }
+    }
+
+    fun collectArticle(articleId:Int,isCollect:Boolean){
+        launch {
+            withContext(Dispatchers.IO){
+                if(isCollect)NetWorkClient.retrofitService.collectArticle(articleId)
+                else NetWorkClient.retrofitService.cancelOriginCollectArticle(articleId)
+            }
         }
     }
 }

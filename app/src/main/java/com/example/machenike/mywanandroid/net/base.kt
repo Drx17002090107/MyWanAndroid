@@ -16,6 +16,8 @@ Describe ：
  */
 
 const val BASE_URL = "https://www.wanandroid.com"
+const val FREE_KEY = "1c5a7044e65241f1b624bf6880435606"
+const val FREE_URL = "https://free-api.heweather.net/s6/weather/"
 
 fun executeMessage(errorBody: ResponseBody?): String {
     return errorBody?.string()?.let {

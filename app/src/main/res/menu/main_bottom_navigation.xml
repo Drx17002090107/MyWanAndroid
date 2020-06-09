@@ -17,7 +17,7 @@
         android:id="@+id/menu_square"
         android:enabled="true"
         android:icon="@drawable/bottom_navigation_square"
-        android:title="广场"
+        android:title="体系"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menu_wechart"
@@ -29,6 +29,6 @@
         android:id="@+id/menu_me"
         android:enabled="true"
         android:icon="@drawable/bottom_navigation_me"
-        android:title="我的"
+        android:title="广场"
         app:showAsAction="ifRoom"/>
 </menu>

@@ -14,6 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import com.example.machenike.mywanandroid.utils.LogUtils
+import retrofit2.converter.scalars.ScalarsConverterFactory
+
 /**
 created time：2019/12/12 17:04
 created by：动感超人
@@ -78,7 +80,17 @@ object NetWorkClient {
         Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+//            .addConverterFactory(ScalarsConverterFactory.create())
             .baseUrl(BASE_URL)
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    val retrofitWeatherService:ApiService by lazy (mode = LazyThreadSafetyMode.SYNCHRONIZED){
+        Retrofit.Builder()
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(FREE_URL)
             .build()
             .create(ApiService::class.java)
     }

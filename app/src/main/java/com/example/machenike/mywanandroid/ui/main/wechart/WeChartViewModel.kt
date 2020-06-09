@@ -1,7 +1,6 @@
 package com.example.machenike.mywanandroid.ui.main.wechart
 
 import androidx.lifecycle.MutableLiveData
-import com.example.machenike.mywanandroid.model.wechart.WeChartInfo
 import com.example.machenike.mywanandroid.model.wechart.WeChartNames
 import com.example.machenike.mywanandroid.model.wechart.WeChartPage
 import com.example.machenike.mywanandroid.net.NetWorkClient
@@ -58,6 +57,15 @@ class WeChartViewModel : BaseViewModel() {
                     mErrorMessage.value = executeMessage(result.errorBody())
                 }
             )
+        }
+    }
+
+    fun collectArticle(articleId:Int,isCollect:Boolean){
+        launch {
+            withContext(Dispatchers.IO){
+                if(isCollect)NetWorkClient.retrofitService.collectArticle(articleId)
+                else NetWorkClient.retrofitService.cancelOriginCollectArticle(articleId)
+            }
         }
     }
 }

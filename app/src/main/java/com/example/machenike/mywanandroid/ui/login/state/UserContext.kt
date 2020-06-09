@@ -13,7 +13,6 @@ object UserContext {
     var isLogin by Preference(Preference.IS_LOGIN,false)
 
     var mState:UserState = if(isLogin) LoginState() else LoginOutState()
-
     fun collect(context:Context?,block:()->Unit){
         mState.collect(context, block)
     }
@@ -21,7 +20,9 @@ object UserContext {
     fun login(context: Context?){
         mState.login(context)
     }
-
+    fun setPersonalScore(context: Context?,block: () -> Unit){
+        mState.setPersonalScore(context,block)
+    }
     fun setLoginState(){
         isLogin = true;
         mState = LoginState()
